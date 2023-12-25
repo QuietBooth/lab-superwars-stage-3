@@ -1,15 +1,16 @@
+
 const PLAYERS = [
     "Spiderman",
     "Captain America",
-    "Wonder woman",
+    "Wonderwoman",
     "Popcorn",
-    "Gem woman",
+    "Gemwoman",
     "Bolt",
-    "Ant woman",
+    "Antwoman",
     "Mask",
     "Tiger",
     "Captain",
-    "Cat woman",
+    "Catwoman",
     "Fish",
     "Hulk",
     "Ninja",
@@ -18,62 +19,65 @@ const PLAYERS = [
     "Thor",
     "Slayer",
     "Vader",
-    "Slingo"
+    "Slingo",
 ];
 
-// initialize players with image and strength
+
+// ! initialize players with image and strength
+
 const initPlayers = (players) => {
-
-    // Instead of for loop use Map method
+    let detailedPlayers = [];
+    
+    // ^ Instead of forloop use Map method
     // Code here
-
-    let detailedPlayers = players.map((player,index) => {
-
-        return{
-            Name : player,
-            strength : getRandomStrength(),
-            Image : "images/super-"+ (index+1) +".png",
-            type: index%2 ==0 ? "hero" : "villain"
-        }
+    
+    players.map((curr,i) => {
+        var currPlayer = i%2 == 0 ? "hero" : "villain"
         
-    });  
-
+        var initialize = {
+            name: curr,
+            strength: getRandomStrength(),
+            image: `./images/super-${i+1}.png`,
+            type: currPlayer
+        };  
+        
+        detailedPlayers.push(initialize);
+    });
     return detailedPlayers;
-}
+};
 
-// getting random strength
-const getRandomStrength = () => {
-    return Math.floor(Math.random() * 100);
-}
+// ! getting random strength
 
-// Build player template
-const buildPlayers = (players, type) => {
+var getRandomStrength = () => {
+    return Math.ceil(Math.random() * 100);
+};
 
-    // Instead of using for loop
-    // Use chaining of Array methods - filter, map and join
-    // Type your code here
-
-    var filteredPlayers = players.filter((player) => player.type==type)
-    var fragment = filteredPlayers.map((player) =>{
-
-        return `<div class="player">
-        <img src="${player.Image}" alt="${player.name}">
-        <h2>${player.Name}</h2>
-        <p class="strength">${player.strength}</p>
-        </div>`;
-
-    })
-
-    return fragment.join('');
-}
-
-// Display players in HTML
-const viewPlayers = (players) => {
-    document.getElementById('heroes').innerHTML = buildPlayers(players, 'hero');
-    document.getElementById('villains').innerHTML = buildPlayers(players, 'villain');
-}
-
+// ! Build player template
+    const buildPlayers = (players, type) => {
+        let fragment = "";
+        
+        // ^ Instead of using for loop
+        // ^ Use chaining of Array methods - filter, map and join
+        // Type your code here
+        
+        fragment = players.filter((curr) => curr.type === type).map((curr) => `<div class="player">
+        <img src="${curr.image}" alt="">
+        <div class="name">${curr.name}</div>
+        <div class="strength">${curr.strength}</div></div>`
+        
+        ).join("");
+        
+        return fragment;
+    }
+    
+    // ! Display players in HTML
+    
+    const viewPlayers = (players) => {
+    document.getElementById("heroes").innerHTML = buildPlayers(players, "hero");
+    document.getElementById("villains").innerHTML = buildPlayers(players,"villain");
+};
 
 window.onload = () => {
     viewPlayers(initPlayers(PLAYERS));
-}
+};
+
